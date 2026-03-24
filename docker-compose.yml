@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: ./api
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+    volumes:
+      - backend_data:/app
+    restart: always
+
+  frontend:
+    build: ./web
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:3001
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  backend_data:
