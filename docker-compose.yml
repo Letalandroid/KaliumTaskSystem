@@ -6,7 +6,7 @@ services:
     environment:
       - PORT=3001
     volumes:
-      - backend_data:/app
+      - backend_data:/app/data
     restart: always
 
   frontend:
