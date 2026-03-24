@@ -13,9 +13,9 @@ Este proyecto es un gestor de tareas seguro y eficiente desarrollado como parte 
 
 - **CRUD Completo:** Creación, listado, actualización de estado y eliminación de tareas.
 - **Prioridades:** Soporta niveles de prioridad `LOW`, `MEDIUM` y `HIGH`.
-- **Modo Kalium:** Funcionalidad obligatoria que filtra y destaca tareas de alta prioridad.
+- **Modo Kalium:** Funcionalidad que filtra y destaca tareas de alta prioridad.
 - **Persistencia:** Uso de SQLite para almacenamiento local persistente.
-- **Diseño Premium:** Interfaz oscura, moderna y responsiva inspirada en Shadcn UI.
+- **Diseño:** Interfaz oscura, moderna y responsiva inspirada en Shadcn UI.
 
 ## Requisitos Previos
 
@@ -31,10 +31,11 @@ docker-compose up --build
 ```
 
 Una vez que los contenedores estén en ejecución:
+
 - **Frontend:** [http://localhost:3000](http://localhost:3000)
 - **Backend:** [http://localhost:3001](http://localhost:3001)
 
-## Lógica Obligatoria Implementada
+## Lógica Implementada
 
 - **Clase TaskManager:** Ubicada en `api/src/tasks/task-manager.service.ts`.
 - **Método activateKaliumMode():** Filtra tareas con prioridad `HIGH`.
@@ -47,10 +48,12 @@ Una vez que los contenedores estén en ejecución:
 ## Seguridad
 
 El sistema implementa:
+
 - **Helmet:** Cabeceras de seguridad HTTP.
 - **Rate Limiting:** Protección contra ataques de fuerza bruta (100 peticiones cada 15 min por IP).
 - **CORS:** Configuración segura de orígenes.
 - **Validation Pipes:** Validación estricta de datos de entrada.
 
 ---
-**Kalium Task System** - *Security First.*
+
+**Kalium Task System** - _Security First._
