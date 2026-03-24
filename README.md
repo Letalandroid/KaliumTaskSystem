@@ -5,7 +5,7 @@ Este proyecto es un gestor de tareas seguro y eficiente desarrollado como parte 
 ## Tecnologías Utilizadas
 
 - **Frontend:** React + TypeScript + Vite + TailwindCSS + Lucide Icons.
-- **Backend:** NestJS + TypeORM + SQLite3.
+- **Backend:** NestJS + Prisma + SQLite.
 - **Seguridad:** Helmet, Rate Limiting, CORS, Validation Pipes.
 - **Infraestructura:** Docker & Docker Compose.
 

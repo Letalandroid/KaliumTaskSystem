@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Post as PostMethod } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { TaskManager } from './task-manager.service';
 import { Task } from './entities/task.entity';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -17,13 +19,13 @@ export class TasksController {
   }
 
   @Post()
-  create(@Body() taskData: Partial<Task>): Promise<Task> {
-    return this.taskManager.create(taskData);
+  create(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.taskManager.create(createTaskDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateData: Partial<Task>): Promise<Task | null> {
-    return this.taskManager.update(id, updateData);
+  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto): Promise<Task | null> {
+    return this.taskManager.update(id, updateTaskDto);
   }
 
   @Delete(':id')
