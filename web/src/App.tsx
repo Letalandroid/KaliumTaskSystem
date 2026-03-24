@@ -227,13 +227,13 @@ const App: React.FC = () => {
               </button>
             </form>
 
-            <div className="mt-8 p-4 rounded-2xl bg-white/5 border border-white/5 flex items-start gap-3">
+            {/* <div className="mt-8 p-4 rounded-2xl bg-white/5 border border-white/5 flex items-start gap-3">
               <Clock className="w-5 h-5 text-primary shrink-0" />
               <p className="text-[11px] leading-relaxed text-white/50 font-medium">
                 Todas las tareas registradas bajo Modo Kalium son cifradas y
                 priorizadas automáticamente por el núcleo del sistema.
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
 
