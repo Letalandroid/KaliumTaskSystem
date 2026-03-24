@@ -1,17 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
-import { Task } from './tasks/entities/task.entity';
+import { PrismaService } from './prisma.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'database.sqlite',
-      entities: [Task],
-      synchronize: true, // Not for production, but good for this test
-    }),
-    TasksModule,
-  ],
+  imports: [TasksModule],
+  providers: [PrismaService],
+  exports: [PrismaService],
 })
 export class AppModule {}
