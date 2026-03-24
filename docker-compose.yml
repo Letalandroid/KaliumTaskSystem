@@ -5,6 +5,7 @@ services:
       - "3001:3001"
     environment:
       - PORT=3001
+      - DATABASE_URL=file:/app/data/database.sqlite
     volumes:
       - backend_data:/app/data
     restart: always
