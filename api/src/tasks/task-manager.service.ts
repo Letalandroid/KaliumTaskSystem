@@ -1,16 +1,12 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { PrismaService } from '../prisma.service';
 import { Task, TaskStatus, TaskPriority } from './entities/task.entity';
 
 @Injectable()
 export class TaskManager implements OnModuleInit {
   private readonly logger = new Logger(TaskManager.name);
 
-  constructor(
-    @InjectRepository(Task)
-    private readonly taskRepository: Repository<Task>,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async onModuleInit() {
     this.logger.log('[Kalium] Task System Inicializado');
@@ -18,46 +14,53 @@ export class TaskManager implements OnModuleInit {
   }
 
   private async seedTasks() {
-    const count = await this.taskRepository.count();
+    const count = await this.prisma.task.count();
     if (count === 0) {
       const initialTasks = [
         { title: 'Pentesting web app', priority: TaskPriority.HIGH, status: TaskStatus.PENDING },
         { title: 'Desarrollo backend modulo', priority: TaskPriority.MEDIUM, status: TaskStatus.PENDING },
         { title: 'Analisis software sospechoso', priority: TaskPriority.HIGH, status: TaskStatus.PENDING },
       ];
-      await this.taskRepository.save(initialTasks);
+      await this.prisma.task.createMany({ data: initialTasks });
       this.logger.log('Preloaded initial tasks successfully.');
     }
   }
 
   async findAll(): Promise<Task[]> {
-    return this.taskRepository.find({ order: { createdAt: 'DESC' } });
+    return this.prisma.task.findMany({
+      orderBy: { createdAt: 'desc' },
+    }) as unknown as Task[];
   }
 
   async findOne(id: string): Promise<Task | null> {
-    return this.taskRepository.findOneBy({ id });
+    return this.prisma.task.findUnique({ where: { id } }) as unknown as Task;
   }
 
   async create(taskData: Partial<Task>): Promise<Task> {
-    const task = this.taskRepository.create(taskData);
-    return this.taskRepository.save(task);
+    return this.prisma.task.create({
+      data: {
+        title: taskData.title!,
+        priority: taskData.priority || TaskPriority.MEDIUM,
+        status: taskData.status || TaskStatus.PENDING,
+      },
+    }) as unknown as Task;
   }
 
   async update(id: string, updateData: Partial<Task>): Promise<Task | null> {
-    await this.taskRepository.update(id, updateData);
-    return this.findOne(id);
+    return this.prisma.task.update({
+      where: { id },
+      data: updateData as any,
+    }) as unknown as Task;
   }
 
   async remove(id: string): Promise<void> {
-    await this.taskRepository.delete(id);
+    await this.prisma.task.delete({ where: { id } });
   }
 
-  /**
-   * Método obligatorio: activateKaliumMode()
-   * Filtra tareas con priority == "HIGH"
-   */
   async activateKaliumMode(): Promise<Task[]> {
     this.logger.log('Kalium Mode Activated: Filtering HIGH priority tasks.');
-    return this.taskRepository.findBy({ priority: TaskPriority.HIGH });
+    return this.prisma.task.findMany({
+      where: { priority: TaskPriority.HIGH },
+    }) as unknown as Task[];
   }
 }
