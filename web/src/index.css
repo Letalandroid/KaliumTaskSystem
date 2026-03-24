@@ -1,38 +1,42 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --radius: 0.5rem;
-  }
+@theme {
+  --color-background: oklch(0.12 0.02 260);
+  --color-foreground: oklch(0.98 0.01 260);
+  --color-card: oklch(0.16 0.03 260);
+  --color-card-foreground: oklch(0.98 0.01 260);
+  --color-primary: oklch(0.65 0.25 260);
+  --color-primary-foreground: oklch(0.98 0.01 260);
+  --color-secondary: oklch(0.25 0.05 260);
+  --color-muted: oklch(0.25 0.05 260);
+  --color-border: oklch(0.3 0.05 260);
+  --radius-xl: 1rem;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Outfit', sans-serif;
   }
+}
+
+.glass {
+  @apply bg-card/60 backdrop-blur-xl border border-white/10;
+}
+
+.glass-pill {
+  @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-full;
+}
+
+.glow-primary {
+  box-shadow: 0 0 20px -5px oklch(0.65 0.25 260 / 0.5);
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.98); }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
